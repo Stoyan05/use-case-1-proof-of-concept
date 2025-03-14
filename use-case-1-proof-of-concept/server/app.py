@@ -4,6 +4,7 @@ import db
 
 app = Flask(__name__)
 
+
 @app.route("/attractions", methods=['GET'])
 def get_all_attractions():
     return db.db_query("SELECT * FROM attractions")
@@ -90,10 +91,11 @@ def get_ticket_by_id(ticket_id):
 @app.route("/tickets", methods=['POST'])
 def create_ticket():
     request_data = request.get_json()
+    highest_id_query = db.db_get_highest_id("SELECT MAX(ticket_id) FROM tickets")
     ticket_type = request_data["ticket_type"]
     ticket_price = request_data["ticket_price"]
 
-    db.db_insert(f"INSERT INTO tickets(ticket_type,ticket_price) VALUES('{ticket_type}', {ticket_price})")
+    db.db_insert(f"INSERT INTO tickets(ticket_id,ticket_type,ticket_price) VALUES({highest_id_query[0][0] + 1},'{ticket_type}', {ticket_price})")
     return {"result" : "successfully created new task"}
 
 
