@@ -22,7 +22,3 @@ def db_query(query_str, params=None):
 def db_insert(query_str):
     query.execute(query_str)
     db_instance.commit()
-
-def db_get_highest_id(query_str):
-    query.execute(query_str)
-    return query.fetchall()
