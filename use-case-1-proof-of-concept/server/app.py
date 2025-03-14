@@ -91,7 +91,7 @@ def get_ticket_by_id(ticket_id):
 @app.route("/tickets", methods=['POST'])
 def create_ticket():
     request_data = request.get_json()
-    highest_id_query = db.db_get_highest_id("SELECT MAX(ticket_id) FROM tickets")
+    highest_id_query = db.db_query("SELECT MAX(ticket_id) FROM tickets")
     ticket_type = request_data["ticket_type"]
     ticket_price = request_data["ticket_price"]
 
